@@ -2,8 +2,8 @@ require('dotenv').config();
 
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./schema');
-const { createStroe } = require('./utils');
-const resolevers = require('./resolvers');
+const { createStore } = require('./utils');
+const resolvers = require('./resolvers');
 
 const LaunchAPI = require('./datasources/launch');
 const UserAPI = require('./datasources/user');
@@ -11,10 +11,11 @@ const UserAPI = require('./datasources/user');
 const store = createStore();
 
 const server = new ApolloServer({ 
-  typeDefs, 
-  datasources: () => ({
+  typeDefs,
+  resolvers,
+  dataSources: () => ({
     launchAPI: new LaunchAPI(),
-    userAPI: newUserAPI({ store })
+    userAPI: new UserAPI({ store })
   }) 
 });
 
